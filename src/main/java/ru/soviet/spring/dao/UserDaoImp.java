@@ -21,9 +21,10 @@ public class UserDaoImp implements UserDao {
                 .getResultList();
     }
 
+    //удалил передачу по id, оставил одну сущность
     @Override
-    public User show(int id) {
-        return entityManager.find(User.class, id);
+    public User show(User user) {
+        return entityManager.find(User.class, user.getId());
     }
 
     @Override
@@ -31,18 +32,17 @@ public class UserDaoImp implements UserDao {
         entityManager.persist(user);
     }
 
+    //удалил передачу по id, оставил одну сущность
+    //оставил один merge
     @Override
-    public void update(int id, User updateUser) {
-        User userBeingUpdated = show(id);
-
-        userBeingUpdated.setName(updateUser.getName());
-        userBeingUpdated.setAge(updateUser.getAge());
-        entityManager.merge(userBeingUpdated);
+    public void update(User updateUser){
+        entityManager.merge(updateUser);
     }
 
+    //удалил передачу по id, оставил одну сущность
     @Override
-    public void delete(int id) {
-        User userDelete = entityManager.find(User.class, id);
+    public void delete(User user) {
+         User userDelete = entityManager.find(User.class, user.getId());
         entityManager.remove(userDelete);
     }
 }

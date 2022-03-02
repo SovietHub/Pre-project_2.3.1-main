@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Pre-project_2.3.1" />
         <module name="spring-crud-app1" />
+        <module name="Pre-project_2.3.1-main" />
       </profile>
     </annotationProcessing>
   </component>

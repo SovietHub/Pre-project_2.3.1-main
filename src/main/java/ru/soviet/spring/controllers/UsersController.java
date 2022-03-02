@@ -7,58 +7,60 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.soviet.spring.dao.UserDaoImp;
 import ru.soviet.spring.models.User;
+import ru.soviet.spring.service.UserService;
 
+//Убрал @Transactional
+//Связал с сервисом
 @Controller
-@Transactional
 @RequestMapping("/")
-    public class UsersController {
+public class UsersController {
 
-        @Autowired
-        private final UserDaoImp userDaoImp;
+    @Autowired
+    private final UserService userService;
 
-        public UsersController(UserDaoImp personDAO) {
-            this.userDaoImp = personDAO;
-        }
+    public UsersController(UserService userService) {
+        this.userService = userService;
+    }
 
-        @GetMapping()
-        public String index(Model model) {
-            model.addAttribute("users", userDaoImp.index());
-            return "users/index";
-        }
+    @GetMapping()
+    public String index(Model model) {
+        model.addAttribute("users", userService.index());
+        return "users/index";
+    }
 
-        @GetMapping("/{id}")
-        public String show(@PathVariable("id") int id, Model model) {
-            model.addAttribute("person", userDaoImp.show(id));
-            return "users/show";
-        }
+    @GetMapping("/{id}")
+    public String show(@ModelAttribute("person") User user, Model model) {
+        model.addAttribute("person", userService.show(user));
+        return "users/show";
+    }
 
-        @GetMapping("/new")
-        public String newPerson(Model model){
-            model.addAttribute("person", new User());
-            return "users/new";
-        }
+    @GetMapping("/new")
+    public String newPerson(Model model){
+        model.addAttribute("person", new User());
+        return "users/new";
+    }
 
-        @PostMapping()
-        public String create(@ModelAttribute("person") User user) {
-            userDaoImp.save(user);
-            return "redirect:/";
-        }
+    @PostMapping()
+    public String create(@ModelAttribute("person") User user) {
+        userService.save(user);
+        return "redirect:/";
+    }//done
 
-        @GetMapping("/{id}/edit")
-        public String edit(Model model, @PathVariable("id") int id) {
-            model.addAttribute("person", userDaoImp.show(id));
-            return "users/edit";
-        }
+    @GetMapping("/{id}/edit")
+    public String edit(@ModelAttribute("person") User user, Model model) {
+        model.addAttribute("person", userService.show(user));
+        return "users/edit";
+    }
 
-        @PatchMapping("/{id}")
-        public String update(@ModelAttribute("person") User user, @PathVariable("id") int id){
-           userDaoImp.update(id,user);
-           return "redirect:/";
-        }
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("person") User user) {
+        userService.update(user);
+        return "redirect:/";
+    } //done
 
-        @DeleteMapping("/{id}")
-        public String delete(@PathVariable("id") int id) {
-            userDaoImp.delete(id);
-            return "redirect:/";
-        }
+    @DeleteMapping("/{id}")
+    public String delete(@ModelAttribute("person") User user) {
+        userService.delete(user);
+        return "redirect:/";
+    }
 }

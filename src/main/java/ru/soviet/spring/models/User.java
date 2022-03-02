@@ -5,9 +5,10 @@ import javax.persistence.*;
 @Entity
 public class User {
 
+    //исправил id на тип long
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     @Column(name = "name")
     private String name;
@@ -18,17 +19,17 @@ public class User {
     public User() {
     }
 
-    public User(int id, String name, int age) {
+    public User(long id, String name, int age) {
         this.id = id;
         this.name = name;
         this.age = age;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
