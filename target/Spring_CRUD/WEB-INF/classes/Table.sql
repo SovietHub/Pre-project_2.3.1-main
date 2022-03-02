@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS table_name (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NULL,
+    age INT NULL,
+    PRIMARY KEY (id)
+    );
