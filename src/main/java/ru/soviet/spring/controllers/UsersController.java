@@ -29,10 +29,11 @@ public class UsersController {
     }
 
     @GetMapping("/{id}")
-    public String show(@ModelAttribute("person") User user, Model model) {
-        model.addAttribute("person", userService.show(user));
+    public String show(@PathVariable("id") int id, Model model) {
+        model.addAttribute("person", userService.show(id));
         return "users/show";
     }
+
 
     @GetMapping("/new")
     public String newPerson(Model model){
@@ -44,11 +45,11 @@ public class UsersController {
     public String create(@ModelAttribute("person") User user) {
         userService.save(user);
         return "redirect:/";
-    }//done
+    }
 
     @GetMapping("/{id}/edit")
-    public String edit(@ModelAttribute("person") User user, Model model) {
-        model.addAttribute("person", userService.show(user));
+    public String edit(Model model,@PathVariable("id") long id) {
+        model.addAttribute("person", userService.show(id));
         return "users/edit";
     }
 
@@ -56,11 +57,11 @@ public class UsersController {
     public String update(@ModelAttribute("person") User user) {
         userService.update(user);
         return "redirect:/";
-    } //done
+    }
 
     @DeleteMapping("/{id}")
-    public String delete(@ModelAttribute("person") User user) {
-        userService.delete(user);
+    public String delete(@PathVariable("id") long id) {
+        userService.delete(id);
         return "redirect:/";
     }
 }

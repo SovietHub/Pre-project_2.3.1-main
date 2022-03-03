@@ -17,8 +17,8 @@ public class UserServiceImp implements UserService {
     private UserDaoImp userDaoImp;
 
     @Override
-    public User show(User user) {
-        return userDaoImp.show(user);
+    public User show(long id) {
+        return userDaoImp.show(id);
     }
 
     @Transactional
@@ -35,8 +35,8 @@ public class UserServiceImp implements UserService {
 
     @Transactional
     @Override
-    public void delete(User user) {
-        userDaoImp.delete(user);
+    public void delete(long id) {
+        userDaoImp.delete(id);
     }
 
     @Override
